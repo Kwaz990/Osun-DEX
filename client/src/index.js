@@ -126,6 +126,20 @@ class CreateComment extends Component {
   }
 }
 
+class Button extends Component {
+  handleClick = () => {
+    this.props.onClickFunction(this.props.incrementValue)
+  }
+  render() {
+    return (
+      <div>
+      <button>Test Button yo!</button>
+      </div>
+    );
+  }
+}
+
+
 class CommentBox extends Component {
   constructor(props) {
     super(props);
@@ -171,3 +185,4 @@ CommentBox.propTypes = {
 };
 
 render(<CommentBox comments={data.comments} post={data.post} />, node);
+// render(<Button/>, node);
