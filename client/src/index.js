@@ -1,188 +1,209 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//import Layout from "./components/Layout";
 
 const node = document.getElementById("root");
 
 const data = {
-  post: {
-    id: 123,
-    content:
-      "What we hope ever to do with ease, we must first learn to do with diligence. — Samuel Johnson",
-    user: "Mark Thomas"
-  },
-  comments: [
+  recentBuyOrders: [
     {
       id: 0,
-      user: "David",
-      content: "such. win."
+      Amount: 12345,
+      Price: 0.01
     },
     {
       id: 1,
-      user: "Haley",
-      content: "Love it."
+      user: 6789,
+      content: 200
     },
-    {
-      id: 2,
-      user: "Peter",
-      content: "Who was Samuel Johnson?"
-    },
-    {
-      id: 3,
-      user: "Mitchell",
-      content: "@Peter get off Letters and do your homework"
-    },
-    {
-      id: 4,
-      user: "Peter",
-      content: "@mitchell ok :P"
-    }
   ]
-};
-class Post extends Component {
-  render() {
-    return (
-      <div className="post">
-        <h2 className="postAuthor">{this.props.user}</h2>
-        <span className="postBody">{this.props.content}</span>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-Post.propTypes = {
-  user: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
-};
-
-class Comment extends Component {
-  render() {
-    return (
-      <div className="comment">
-        <h2 className="commentAuthor">{this.props.user + " : "}</h2>
-        <span className="commentContent">{this.props.content}</span>
-      </div>
-    );
-  }
 }
 
-Comment.propTypes = {
-  id: PropTypes.number.isRequired,
-  content: PropTypes.string.isRequired,
-  user: PropTypes.string.isRequired
-};
 
-class CreateComment extends Component {
+
+
+class Buy extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: "",
-      user: ""
+      color: 'green',
+      Amount: '',
+      Price: ''
     };
-    this.handleUserChange = this.handleUserChange.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleAmountChange = this.handleAmountChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleUserChange(event) {
-    this.setState({
-      user: event.target.value
-    });
+  handleAmountChange(event) {
+    const val = event.target.value;
+    this.setState(() => ({
+      Amount: val
+    }));
   }
-  handleTextChange(event) {
-    this.setState({
-      content: event.target.value
-    });
+  handlePriceChange(event) {
+    const val = event.target.value;
+    this.setState(() => ({
+      Price: val
+    }));
   }
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onCommentSubmit({
-      user: this.state.user.trim(),
-      content: this.state.content.trim()
+    this.props.onBuySubmit({
+      Amount: this.state.Amount.trim(),
+      Price: this.state.Price.trim()
     });
-    this.setState({
-      user: "",
-      content: ""
-    });
+    this.setState(() => ({
+      Amount: '',
+      Price: ''
+    }));
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="createComment">
-        <input
-          value={this.state.user}
-          onChange={this.handleUserChange}
-          placeholder="Your name"
-          type="text"
-        />
-        <input
-          value={this.state.content}
-          onChange={this.handleTextChange}
-          placeholder="Thoughts?"
-          type="text"
-        />
-        <button type="submit">Post</button>
+      <form onSubmit ={this.handleSubmit} className ="Buy">
+        <input 
+          value={this.state.Amount}
+          onChange={this.handleAmountChange}
+          placeholder="Amount of Crypto to Buy"
+          type="number"
+          />
+        <input 
+          value={this.state.Price}
+          onChange={this.handlePriceChange}
+          placeholder="Buy Price"
+          typer="number"
+          />
+        <button type="submit">Buy</button>
       </form>
     );
-  }
+  }; 
 }
 
-class Button extends Component {
-  handleClick = () => {
-    this.props.onClickFunction(this.props.incrementValue)
-  }
-  render() {
-    return (
-      <div>
-      <button>Test Button yo!</button>
-      </div>
-    );
-  }
-}
-
-
-class CommentBox extends Component {
+class RecentBuyOrdersBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: this.props.comments
+        buyOrders: this.props.buyOrders
     };
-    this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    this.handleRecentBuys = this.handleRecentBuys.bind(this);
   }
-  handleCommentSubmit(comment) {
-    const comments = this.state.comments;
-    comment.id = Date.now();
-    const newComments = comments.concat([comment]);
+  handleRecentBuys(buyOrders) {
+    const orders = this.state.orders;
+    orders.id = Date.now();
+    const newBuys = orders.concat([orders]);
     this.setState({
-      comments: newComments
+        orders: newBuys
     });
   }
   render() {
-    return (
-      <div className="commentBox">
-        <Post
-          id={this.props.post.id}
-          content={this.props.post.content}
-          user={this.props.post.user}
-        />
-        {this.state.comments.map(function(comment) {
-          return (
-            <Comment
-              key={comment.id}
-              content={comment.content}
-              user={comment.user}
-            />
-          );
-        })}
-        <CreateComment onCommentSubmit={this.handleCommentSubmit} />
-      </div>
-    );
+      return(
+        <div className = "recentBuyOrdersBox">
+        <Buy
+          id={this.props.Amount.id}
+          Amount={this.props.Buy.Amount}
+          Price={this.props.Buy.Price}
+          />
+          {this.state.recentBuyOrders.map(function(buyOrders) {
+            return (
+                <Buy 
+                  key = {buyOrders.id}
+                  Amount={buyOrders.Amount}
+                  Price={buyOrders.Price}
+                />
+            );
+          })}
+          <Buy onBuySubmit={this.handleRecentBuys} />  
+        </div>
+      )
   }
 }
 
-CommentBox.propTypes = {
-  post: PropTypes.object,
-  comments: PropTypes.arrayOf(PropTypes.object)
-};
 
-render(<CommentBox comments={data.comments} post={data.post} />, node);
-// render(<Button/>, node);
+
+
+class Sell extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      color: 'red',
+      Amount: '',
+      Price: ''
+    };
+    this.handleAmountChange = this.handleAmountChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleAmountChange(event) {
+    const val = event.target.value;
+    this.setState(() => ({
+      Amount: val
+    }));
+  }
+  handlePriceChange(event) {
+    const val = event.target.value;
+    this.setState(() => ({
+      Price: val
+    }));
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.setState(() => ({
+      Amount: '',
+      Price: ''
+    }));
+  }
+  render() {
+    return (
+      <form onSubmit ={this.handleSubmit} className ="Sell">
+        <input 
+          value={this.state.Amount}
+          onChange={this.handleAmountChange}
+          placeholder="Amount of Crypto to Sell"
+          type="number"
+          />
+        <input 
+          value={this.state.Price}
+          onChange={this.handlePriceChange}
+          placeholder="Sell Price"
+          typer="number"
+          />
+        <button type="submit">Sell</button>
+      </form>
+    );
+  }; 
+}
+
+
+
+
+
+
+
+
+
+
+
+render(
+  <div>
+    <Buy/>
+    <Sell/>
+  </div>, node);
+  
