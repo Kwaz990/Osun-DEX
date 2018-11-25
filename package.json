@@ -27,8 +27,13 @@
         "scenario:forwarder_buy_erc721_tokens": "cross-env yarn build && node ./lib/scenarios/forwarder_buy_erc721_tokens.js",
         "scenario:exchange_subscribe": "cross-env yarn build && node ./lib/scenarios/exchange_subscribe.js",
         "dev": "lite-server",
-        "start": "node your-script.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "react-scripts start",
+        "build_react": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject",
+        "link-contracts": "run-script-os",
+        "link-contracts:linux:darwin": "cd src && ln -s ../../build/contracts contracts",
+        "link-contracts:win32": "cd src && mklink \\D contracts ..\\..\\build\\contracts"
     },
     "config": {
         "mnemonic": "concert load couple harbor equip island argue ramp clarify fence smart topic",
@@ -47,11 +52,21 @@
         "body-parser": "^1.18.3",
         "cli-table": "^0.3.1",
         "copyfiles": "^2.0.0",
+        "enroute": "^1.0.1",
         "express": "^4.16.3",
+        "history": "^4.7.2",
         "http": "^0.0.0",
         "lodash": "^4.17.5",
         "ora": "^2.1.0",
+        "react": "^16.4.2",
+        "react-dom": "^16.4.2",
+        "react-router-dom": "^4.3.1",
+        "react-scripts": "1.1.4",
+        "react-web3": "^1.2.0",
         "run-s": "^0.0.0",
+        "save": "^2.3.2",
+        "truffle-contract": "^4.0.0-next.0",
+        "web3": "^1.0.0-beta.35",
         "websocket": "^1.0.26"
     },
     "devDependencies": {
@@ -70,6 +85,7 @@
         "npm-run-all": "^4.1.2",
         "shx": "^0.2.2",
         "tslint": "5.11.0",
-        "typescript": "3.0.1"
+        "typescript": "3.0.1",
+        "run-script-os": "^1.0.3"
     }
 }
